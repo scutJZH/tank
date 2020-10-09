@@ -11,14 +11,17 @@ public class Tank {
     private int x;
     private int y;
     private DirEnum dir;
-    private static final int SPEED = 5;
     private boolean moving = false;
+    private TankFrame tf;
+    private static final int SPEED = 5;
 
-    public Tank(Integer x, Integer y, DirEnum dir) {
+
+    public Tank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
     public void paint(Graphics g) {
@@ -63,4 +66,7 @@ public class Tank {
         }
     }
 
+    public void fire() {
+        tf.getBulletList().add(new Bullet(this.x, this.y, this.dir));
+    }
 }

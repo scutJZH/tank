@@ -5,14 +5,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200, 200, DirEnum.RIGHT);
-    Bullet bullet = new Bullet(300,300,  DirEnum.DOWN);
+    private Tank myTank = new Tank(200, 200, DirEnum.RIGHT, this);
+    private List<Bullet> bulletList = new ArrayList<>();
 
-    private static final int GAME_WIDTH = 800;
-    private static final int GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 800;
+    public static final int GAME_HEIGHT = 600;
 
     public TankFrame() {
         setVisible(true);
@@ -32,7 +35,14 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
-        bullet.paint(g);
+        Iterator<Bullet> bulletIterator = bulletList.iterator();
+        while (bulletIterator.hasNext()) {
+            Bullet bullet = bulletIterator.next();
+            if (!bullet.isLive()) {
+                bulletIterator.remove();
+            }
+            bullet.paint(g);
+        }
     }
 
     Image offScreenImage = null;
@@ -74,6 +84,8 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = true;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                 default:
                     break;
             }
@@ -128,5 +140,8 @@ public class TankFrame extends Frame {
         }
     }
 
+    public List<Bullet> getBulletList() {
+        return this.bulletList;
+    }
 
 }

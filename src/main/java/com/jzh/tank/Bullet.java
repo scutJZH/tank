@@ -1,14 +1,18 @@
 package com.jzh.tank;
 
+import lombok.Data;
+
 import java.awt.*;
 
+@Data
 public class Bullet {
-    private static final int SPEED = 4;
+    private static final int SPEED = 1;
     private static final int WIDTH = 20;
     private static final int HEIGHT = 20;
     private int x;
     private int y;
     private DirEnum dir;
+    private boolean live = true;
 
     public Bullet(int x, int y, DirEnum dir) {
         this.x = x;
@@ -56,6 +60,9 @@ public class Bullet {
                 break;
             default:
                 break;
+        }
+        if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT) {
+            live = false;
         }
     }
 }
