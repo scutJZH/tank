@@ -13,8 +13,9 @@ public class Tank {
     private DirEnum dir;
     private boolean moving = false;
     private TankFrame tf;
-    private static final int SPEED = 5;
-
+    private static final int SPEED = 3;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
     public Tank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
         super();
@@ -27,7 +28,7 @@ public class Tank {
     public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
+        g.fillRect(x, y, WIDTH, HEIGHT);
         g.setColor(c);
         if (!moving) {
             return;
@@ -67,6 +68,6 @@ public class Tank {
     }
 
     public void fire() {
-        tf.getBulletList().add(new Bullet(this.x, this.y, this.dir));
+        tf.getBulletList().add(new Bullet(this.x + WIDTH / 2 - Bullet.WIDTH / 2, this.y + HEIGHT / 2 - Bullet.HEIGHT / 2, this.dir));
     }
 }

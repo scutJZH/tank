@@ -6,9 +6,9 @@ import java.awt.*;
 
 @Data
 public class Bullet {
-    private static final int SPEED = 1;
-    private static final int WIDTH = 20;
-    private static final int HEIGHT = 20;
+    private static final int SPEED = 5;
+    public static final int WIDTH = 20;
+    public static final int HEIGHT = 20;
     private int x;
     private int y;
     private DirEnum dir;
