@@ -17,6 +17,15 @@ public class ResourceMgr {
     public static BufferedImage tankRightDownImage;
     public static BufferedImage tankRightUpImage;
 
+    public static BufferedImage myTankLeftImage;
+    public static BufferedImage myTankRightImage;
+    public static BufferedImage myTankUpImage;
+    public static BufferedImage myTankDownImage;
+    public static BufferedImage myTankLeftDownImage;
+    public static BufferedImage myTankLeftUpImage;
+    public static BufferedImage myTankRightDownImage;
+    public static BufferedImage myTankRightUpImage;
+
     public static BufferedImage bulletLeftImage;
     public static BufferedImage bulletRightImage;
     public static BufferedImage bulletUpImage;
@@ -26,6 +35,8 @@ public class ResourceMgr {
 
     static {
         try {
+
+
             tankUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
             tankLeftImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
             tankRightImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
@@ -34,6 +45,15 @@ public class ResourceMgr {
             tankLeftUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankLU.gif"));
             tankRightDownImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankRD.gif"));
             tankRightUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankRU.gif"));
+
+            myTankUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+            myTankRightUpImage = ImageUtil.rotateImage(myTankUpImage, 45);
+            myTankRightImage = ImageUtil.rotateImage(myTankUpImage, 90);
+            myTankRightDownImage = ImageUtil.rotateImage(myTankUpImage, 135);
+            myTankDownImage = ImageUtil.rotateImage(myTankUpImage, 180);
+            myTankLeftDownImage = ImageUtil.rotateImage(myTankUpImage, 225);
+            myTankLeftUpImage = ImageUtil.rotateImage(myTankUpImage, 315);
+            myTankLeftImage = ImageUtil.rotateImage(myTankUpImage, 270);
 
             bulletUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.png"));
             bulletLeftImage = ImageUtil.rotateImage(bulletUpImage, -90);

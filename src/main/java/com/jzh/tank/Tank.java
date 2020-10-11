@@ -45,6 +45,15 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
+        if (Group.ENEMY.equals(group)) {
+            enemyPaint(g);
+        } else if (Group.SELF.equals(group)) {
+            myTankPaint(g);
+        }
+        move();
+    }
+
+    private void enemyPaint(Graphics g) {
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.tankUpImage, x, y, null);
@@ -87,7 +96,51 @@ public class Tank {
                 height = ResourceMgr.tankRightDownImage.getHeight();
                 break;
         }
-        move();
+    }
+
+    private void myTankPaint(Graphics g) {
+        switch (dir) {
+            case UP:
+                g.drawImage(ResourceMgr.myTankUpImage, x, y, null);
+                width = ResourceMgr.myTankUpImage.getWidth();
+                height = ResourceMgr.myTankUpImage.getHeight();
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.myTankDownImage, x, y, null);
+                width = ResourceMgr.myTankDownImage.getWidth();
+                height = ResourceMgr.myTankDownImage.getHeight();
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.myTankLeftImage, x, y, null);
+                width = ResourceMgr.myTankLeftImage.getWidth();
+                height = ResourceMgr.myTankLeftImage.getHeight();
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.myTankRightImage, x, y, null);
+                width = ResourceMgr.myTankRightImage.getWidth();
+                height = ResourceMgr.myTankRightImage.getHeight();
+                break;
+            case LEFT_UP:
+                g.drawImage(ResourceMgr.myTankLeftUpImage, x, y, null);
+                width = ResourceMgr.myTankLeftUpImage.getWidth();
+                height = ResourceMgr.myTankLeftUpImage.getHeight();
+                break;
+            case RIGHT_UP:
+                g.drawImage(ResourceMgr.myTankRightUpImage, x, y, null);
+                width = ResourceMgr.myTankRightUpImage.getWidth();
+                height = ResourceMgr.myTankRightUpImage.getHeight();
+                break;
+            case LEFT_DOWN:
+                g.drawImage(ResourceMgr.myTankLeftDownImage, x, y, null);
+                width = ResourceMgr.myTankLeftDownImage.getWidth();
+                height = ResourceMgr.myTankLeftDownImage.getHeight();
+                break;
+            case RIGHT_DOWN:
+                g.drawImage(ResourceMgr.myTankRightDownImage, x, y, null);
+                width = ResourceMgr.myTankRightDownImage.getWidth();
+                height = ResourceMgr.myTankRightDownImage.getHeight();
+                break;
+        }
     }
 
     private void move() {
@@ -133,8 +186,13 @@ public class Tank {
             default:
                 break;
         }
-        if (Group.ENEMY.equals(this.group) && Math.random() > 0.99) {
-            fire();
+        if (Group.ENEMY.equals(this.group)) {
+            if (Math.random() > 0.99) {
+                fire();
+            }
+            if (Math.random() > 0.95) {
+                randomDir();
+            }
         }
     }
 
@@ -147,5 +205,10 @@ public class Tank {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    private void randomDir() {
+        this.dir = DirEnum.values()[(int)(Math.random() * DirEnum.values().length)];
     }
 }
