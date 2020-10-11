@@ -14,6 +14,7 @@ public class TankFrame extends Frame {
     private Tank myTank = new Tank(200, 200, DirEnum.RIGHT, Group.SELF, this);
     private List<Bullet> bulletList = new ArrayList<>();
     private List<Tank> enemies = new ArrayList<>();
+    private List<Explode> explodes = new ArrayList<>();
 
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
@@ -46,25 +47,40 @@ public class TankFrame extends Frame {
         Iterator<Bullet> bulletIterator = bulletList.iterator();
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();
-            if (!bullet.isLiving()) {
+            if (bullet.isLiving()) {
+                bullet.paint(g);
+            } else {
                 bulletIterator.remove();
             }
-            bullet.paint(g);
         }
 
         Iterator<Tank> tankIterator = enemies.iterator();
         while (tankIterator.hasNext()) {
             Tank enemy = tankIterator.next();
-            if (!enemy.isLiving()) {
+            if (enemy.isLiving()) {
+                enemy.paint(g);
+            } else {
                 tankIterator.remove();
             }
-            enemy.paint(g);
         }
 
         for (Bullet bullet : bulletList) {
             for (Tank tank : enemies) {
-                bullet.strike(tank);
+                if (bullet.strike(tank)) {
+                    explodes.add(new Explode(tank.getX(), tank.getY()));
+                }
             }
+        }
+
+        Iterator<Explode> explodeIterator = explodes.listIterator();
+        while (explodeIterator.hasNext()) {
+            Explode explode = explodeIterator.next();
+            if (explode.isLiving()) {
+                explode.paint(g);
+            } else {
+                explodeIterator.remove();
+            }
+
         }
     }
 

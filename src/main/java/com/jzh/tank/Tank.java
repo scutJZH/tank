@@ -15,7 +15,7 @@ public class Tank {
     private DirEnum dir;
     private boolean moving = false;
     private TankFrame tf;
-    private static final int SPEED = 3;
+    private static final int SPEED = 2;
     private int width;
     private int height;
     private boolean living = true;
@@ -122,14 +122,14 @@ public class Tank {
             default:
                 break;
         }
-        if (Group.ENEMY.equals(this.group) && Math.random() > 0.9) {
+        if (Group.ENEMY.equals(this.group) && Math.random() > 0.99) {
             fire();
         }
     }
 
     public void fire() {
         if (DirEnum.RIGHT.equals(dir) || DirEnum.UP.equals(dir) || DirEnum.LEFT.equals(dir) || DirEnum.DOWN.equals(dir)) {
-            tf.getBulletList().add(new Bullet(this.x + width / 2, this.y + height / 2, this.dir));
+            tf.getBulletList().add(new Bullet(this.x + width / 2, this.y + height / 2, this.dir, this));
         }
     }
 }

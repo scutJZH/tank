@@ -13,11 +13,13 @@ public class Bullet {
     private int y;
     private DirEnum dir;
     private boolean living = true;
+    private Tank belongsTo;
 
-    public Bullet(int x, int y, DirEnum dir) {
+    public Bullet(int x, int y, DirEnum dir, Tank belongsTo) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.belongsTo = belongsTo;
     }
 
     public void paint(Graphics g) {
@@ -84,11 +86,17 @@ public class Bullet {
         }
     }
 
-    public void strike(Tank tank) {
+    public boolean strike(Tank tank) {
+        if (belongsTo.equals(tank)) {
+            return false;
+        }
         Rectangle bulletRectangle = new Rectangle(x, y, width, height);
         Rectangle tankRectangle = new Rectangle(tank.getX(), tank.getY(), tank.getWidth(), tank.getHeight());
         if (bulletRectangle.intersects(tankRectangle)) {
             tank.setLiving(false);
+            this.living = false;
+            return true;
         }
+        return false;
     }
 }

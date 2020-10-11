@@ -3,6 +3,8 @@ package com.jzh.tank;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResourceMgr {
 
@@ -20,6 +22,8 @@ public class ResourceMgr {
     public static BufferedImage bulletUpImage;
     public static BufferedImage bulletDownImage;
 
+    public static List<BufferedImage> explodeImages;
+
     static {
         try {
             tankLeftImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
@@ -35,6 +39,11 @@ public class ResourceMgr {
             bulletRightImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
             bulletUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
             bulletDownImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
+
+            explodeImages = new ArrayList<>();
+            for (int i = 1; i <= 16; i++) {
+                explodeImages.add(ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/e" + i + ".gif")));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
