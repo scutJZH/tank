@@ -24,6 +24,7 @@ public class Tank {
     private int height;
     private boolean living = true;
     private Group group;
+    private Rectangle tankRectangle = new Rectangle();
 
     public Tank(Integer x, Integer y, DirEnum dir, Group group, TankFrame tf) {
         super();
@@ -32,6 +33,8 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        initTankBounds();
+        tankRectangle.setBounds(x, y, width, height);
     }
 
     public Tank(Integer x, Integer y, DirEnum dir, Boolean moving, Group group, TankFrame tf) {
@@ -42,6 +45,50 @@ public class Tank {
         this.group = group;
         this.tf = tf;
         this.moving = moving;
+        initTankBounds();
+        tankRectangle.setBounds(x, y, width, height);
+    }
+
+    private void initTankBounds() {
+        if (Group.ENEMY.equals(group)) {
+            switch (dir) {
+                case UP:
+                    width = ResourceMgr.tankUpImage.getWidth();
+                    height = ResourceMgr.tankUpImage.getHeight();
+                    break;
+                case DOWN:
+                    width = ResourceMgr.tankDownImage.getWidth();
+                    height = ResourceMgr.tankDownImage.getHeight();
+                    break;
+                case LEFT:
+                    width = ResourceMgr.tankLeftImage.getWidth();
+                    height = ResourceMgr.tankLeftImage.getHeight();
+                    break;
+                case RIGHT:
+                    width = ResourceMgr.tankRightImage.getWidth();
+                    height = ResourceMgr.tankRightImage.getHeight();
+                    break;
+            }
+        } else {
+            switch (dir) {
+                case UP:
+                    width = ResourceMgr.myTankUpImage.getWidth();
+                    height = ResourceMgr.myTankUpImage.getHeight();
+                    break;
+                case DOWN:
+                    width = ResourceMgr.myTankDownImage.getWidth();
+                    height = ResourceMgr.myTankDownImage.getHeight();
+                    break;
+                case LEFT:
+                    width = ResourceMgr.myTankLeftImage.getWidth();
+                    height = ResourceMgr.myTankLeftImage.getHeight();
+                    break;
+                case RIGHT:
+                    width = ResourceMgr.myTankRightImage.getWidth();
+                    height = ResourceMgr.myTankRightImage.getHeight();
+                    break;
+            }
+        }
     }
 
     public void paint(Graphics g) {
@@ -75,26 +122,6 @@ public class Tank {
                 width = ResourceMgr.tankRightImage.getWidth();
                 height = ResourceMgr.tankRightImage.getHeight();
                 break;
-            case LEFT_UP:
-                g.drawImage(ResourceMgr.tankLeftUpImage, x, y, null);
-                width = ResourceMgr.tankLeftUpImage.getWidth();
-                height = ResourceMgr.tankLeftUpImage.getHeight();
-                break;
-            case RIGHT_UP:
-                g.drawImage(ResourceMgr.tankRightUpImage, x, y, null);
-                width = ResourceMgr.tankRightUpImage.getWidth();
-                height = ResourceMgr.tankRightUpImage.getHeight();
-                break;
-            case LEFT_DOWN:
-                g.drawImage(ResourceMgr.tankLeftDownImage, x, y, null);
-                width = ResourceMgr.tankLeftDownImage.getWidth();
-                height = ResourceMgr.tankLeftDownImage.getHeight();
-                break;
-            case RIGHT_DOWN:
-                g.drawImage(ResourceMgr.tankRightDownImage, x, y, null);
-                width = ResourceMgr.tankRightDownImage.getWidth();
-                height = ResourceMgr.tankRightDownImage.getHeight();
-                break;
         }
     }
 
@@ -119,26 +146,6 @@ public class Tank {
                 g.drawImage(ResourceMgr.myTankRightImage, x, y, null);
                 width = ResourceMgr.myTankRightImage.getWidth();
                 height = ResourceMgr.myTankRightImage.getHeight();
-                break;
-            case LEFT_UP:
-                g.drawImage(ResourceMgr.myTankLeftUpImage, x, y, null);
-                width = ResourceMgr.myTankLeftUpImage.getWidth();
-                height = ResourceMgr.myTankLeftUpImage.getHeight();
-                break;
-            case RIGHT_UP:
-                g.drawImage(ResourceMgr.myTankRightUpImage, x, y, null);
-                width = ResourceMgr.myTankRightUpImage.getWidth();
-                height = ResourceMgr.myTankRightUpImage.getHeight();
-                break;
-            case LEFT_DOWN:
-                g.drawImage(ResourceMgr.myTankLeftDownImage, x, y, null);
-                width = ResourceMgr.myTankLeftDownImage.getWidth();
-                height = ResourceMgr.myTankLeftDownImage.getHeight();
-                break;
-            case RIGHT_DOWN:
-                g.drawImage(ResourceMgr.myTankRightDownImage, x, y, null);
-                width = ResourceMgr.myTankRightDownImage.getWidth();
-                height = ResourceMgr.myTankRightDownImage.getHeight();
                 break;
         }
     }
@@ -167,22 +174,6 @@ public class Tank {
             case RIGHT:
                 x += SPEED;
                 break;
-            case LEFT_UP:
-                x -= SPEED;
-                y -= SPEED;
-                break;
-            case RIGHT_UP:
-                x += SPEED;
-                y -= SPEED;
-                break;
-            case LEFT_DOWN:
-                x -= SPEED;
-                y += SPEED;
-                break;
-            case RIGHT_DOWN:
-                x += SPEED;
-                y += SPEED;
-                break;
             default:
                 break;
         }
@@ -195,6 +186,7 @@ public class Tank {
             fire();
         }
         bounderCheck();
+        tankRectangle.setBounds(x, y, width, height);
     }
 
     public void fire() {

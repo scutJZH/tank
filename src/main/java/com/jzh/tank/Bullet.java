@@ -13,6 +13,7 @@ public class Bullet {
     private int y;
     private DirEnum dir;
     private boolean living = true;
+    Rectangle bulletRectangle = new Rectangle();
     private Tank belongsTo;
 
     public Bullet(DirEnum dir, Tank belongsTo) {
@@ -44,6 +45,7 @@ public class Bullet {
                 this.y = belongsTo.getY() + belongsTo.getHeight() / 2 - height / 2;
                 break;
         }
+        bulletRectangle.setBounds(this.x, this.y, this.width, this.height);
     }
 
     public void paint(Graphics g) {
@@ -89,37 +91,18 @@ public class Bullet {
             case RIGHT:
                 x += SPEED;
                 break;
-            case LEFT_UP:
-                x -= SPEED;
-                y -= SPEED;
-                break;
-            case RIGHT_UP:
-                x += SPEED;
-                y -= SPEED;
-                break;
-            case LEFT_DOWN:
-                x -= SPEED;
-                y += SPEED;
-                break;
-            case RIGHT_DOWN:
-                x += SPEED;
-                y += SPEED;
-                break;
-            default:
-                break;
         }
         if (x < -width || x > TankFrame.GAME_WIDTH || y < -height || y > TankFrame.GAME_HEIGHT) {
             living = false;
         }
+        bulletRectangle.setBounds(this.x, this.y, this.width, this.height);
     }
 
     public boolean strike(Tank tank) {
         if (belongsTo.equals(tank)) {
             return false;
         }
-        Rectangle bulletRectangle = new Rectangle(x, y, width, height);
-        Rectangle tankRectangle = new Rectangle(tank.getX(), tank.getY(), tank.getWidth(), tank.getHeight());
-        if (bulletRectangle.intersects(tankRectangle)) {
+        if (bulletRectangle.intersects(tank.getTankRectangle())) {
             tank.setLiving(false);
             this.living = false;
             return true;
