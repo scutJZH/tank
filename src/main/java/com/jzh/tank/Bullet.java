@@ -83,4 +83,12 @@ public class Bullet {
             living = false;
         }
     }
+
+    public void strike(Tank tank) {
+        Rectangle bulletRectangle = new Rectangle(x, y, width, height);
+        Rectangle tankRectangle = new Rectangle(tank.getX(), tank.getY(), tank.getWidth(), tank.getHeight());
+        if (bulletRectangle.intersects(tankRectangle)) {
+            tank.setLiving(false);
+        }
+    }
 }

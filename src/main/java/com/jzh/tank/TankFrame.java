@@ -60,6 +60,12 @@ public class TankFrame extends Frame {
             }
             enemy.paint(g);
         }
+
+        for (Bullet bullet : bulletList) {
+            for (Tank tank : enemies) {
+                bullet.strike(tank);
+            }
+        }
     }
 
     Image offScreenImage = null;
