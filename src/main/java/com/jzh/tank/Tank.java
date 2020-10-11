@@ -2,9 +2,13 @@ package com.jzh.tank;
 
 import lombok.Data;
 import lombok.Setter;
+import sun.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 @Setter
@@ -90,6 +94,13 @@ public class Tank {
         if (!moving) {
             return;
         }
+        // 发出声音
+        try {
+            AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_move.wav")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         switch (dir) {
             case UP:
                 y -= SPEED;
@@ -130,6 +141,11 @@ public class Tank {
     public void fire() {
         if (DirEnum.RIGHT.equals(dir) || DirEnum.UP.equals(dir) || DirEnum.LEFT.equals(dir) || DirEnum.DOWN.equals(dir)) {
             tf.getBulletList().add(new Bullet(this.dir, this));
+            try {
+                AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_fire.wav")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

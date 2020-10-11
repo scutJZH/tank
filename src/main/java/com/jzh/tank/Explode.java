@@ -3,10 +3,7 @@ package com.jzh.tank;
 import lombok.Data;
 import sun.audio.AudioPlayer;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
