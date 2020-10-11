@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 @Setter
 @Data
@@ -18,13 +19,25 @@ public class Tank {
     private int width;
     private int height;
     private boolean living = true;
+    private Group group;
 
-    public Tank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
+    public Tank(Integer x, Integer y, DirEnum dir, Group group, TankFrame tf) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
+    }
+
+    public Tank(Integer x, Integer y, DirEnum dir, Boolean moving, Group group, TankFrame tf) {
+        super();
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.group = group;
+        this.tf = tf;
+        this.moving = moving;
     }
 
     public void paint(Graphics g) {
@@ -108,6 +121,9 @@ public class Tank {
                 break;
             default:
                 break;
+        }
+        if (Group.ENEMY.equals(this.group) && Math.random() > 0.9) {
+            fire();
         }
     }
 
