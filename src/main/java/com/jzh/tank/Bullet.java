@@ -15,36 +15,63 @@ public class Bullet {
     private boolean living = true;
     private Tank belongsTo;
 
-    public Bullet(int x, int y, DirEnum dir, Tank belongsTo) {
-        this.x = x;
-        this.y = y;
+    public Bullet(DirEnum dir, Tank belongsTo) {
         this.dir = dir;
         this.belongsTo = belongsTo;
-    }
-
-    public void paint(Graphics g) {
         switch (dir) {
             case UP:
                 width = ResourceMgr.bulletUpImage.getWidth();
                 height = ResourceMgr.bulletUpImage.getHeight();
-                g.drawImage(ResourceMgr.bulletUpImage, x - width / 2, y - height / 2, null);
+                this.x = belongsTo.getX() + belongsTo.getWidth() / 2 - width / 2;
+                this.y = belongsTo.getY() - height;
                 break;
             case DOWN:
                 width = ResourceMgr.bulletDownImage.getWidth();
                 height = ResourceMgr.bulletDownImage.getHeight();
-                g.drawImage(ResourceMgr.bulletDownImage, x - width / 2, y - height / 2, null);
+                this.x = belongsTo.getX() + belongsTo.getWidth() / 2 - width / 2;
+                this.y = belongsTo.getY() + belongsTo.getHeight();
                 break;
             case LEFT:
                 width = ResourceMgr.bulletLeftImage.getWidth();
                 height = ResourceMgr.bulletLeftImage.getHeight();
-                g.drawImage(ResourceMgr.bulletLeftImage, x - width / 2, y - height / 2, null);
+                this.x = belongsTo.getX() - width;
+                this.y = belongsTo.getY() + belongsTo.getHeight() / 2 - height / 2;
                 break;
             case RIGHT:
                 width = ResourceMgr.bulletRightImage.getWidth();
                 height = ResourceMgr.bulletRightImage.getHeight();
-                g.drawImage(ResourceMgr.bulletRightImage, x - width / 2, y - height / 2, null);
+                this.x = belongsTo.getX() + belongsTo.getWidth();
+                this.y = belongsTo.getY() + belongsTo.getHeight() / 2 - height / 2;
                 break;
         }
+    }
+
+    public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        switch (dir) {
+            case UP:
+                width = ResourceMgr.bulletUpImage.getWidth();
+                height = ResourceMgr.bulletUpImage.getHeight();
+                g.drawImage(ResourceMgr.bulletUpImage, x, y, null);
+                break;
+            case DOWN:
+                width = ResourceMgr.bulletDownImage.getWidth();
+                height = ResourceMgr.bulletDownImage.getHeight();
+                g.drawImage(ResourceMgr.bulletDownImage, x, y, null);
+                break;
+            case LEFT:
+                width = ResourceMgr.bulletLeftImage.getWidth();
+                height = ResourceMgr.bulletLeftImage.getHeight();
+                g.drawImage(ResourceMgr.bulletLeftImage, x, y, null);
+                break;
+            case RIGHT:
+                width = ResourceMgr.bulletRightImage.getWidth();
+                height = ResourceMgr.bulletRightImage.getHeight();
+                g.drawImage(ResourceMgr.bulletRightImage, x, y, null);
+                break;
+        }
+        g.setColor(c);
         move();
     }
 

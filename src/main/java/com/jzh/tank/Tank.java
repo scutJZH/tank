@@ -129,7 +129,7 @@ public class Tank {
 
     public void fire() {
         if (DirEnum.RIGHT.equals(dir) || DirEnum.UP.equals(dir) || DirEnum.LEFT.equals(dir) || DirEnum.DOWN.equals(dir)) {
-            tf.getBulletList().add(new Bullet(this.x + width / 2, this.y + height / 2, this.dir, this));
+            tf.getBulletList().add(new Bullet(this.dir, this));
         }
     }
 }

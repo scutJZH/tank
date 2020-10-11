@@ -41,7 +41,6 @@ public class TankFrame extends Frame {
         g.drawString("子弹数量：" + bulletList.size(), 100, 100);
         g.drawString("敌人数量：" + enemies.size(), 100, 300);
         g.setColor(c);
-
         myTank.paint(g);
 
         Iterator<Bullet> bulletIterator = bulletList.iterator();
