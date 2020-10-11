@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 @Setter
 @Data
@@ -14,8 +15,9 @@ public class Tank {
     private boolean moving = false;
     private TankFrame tf;
     private static final int SPEED = 3;
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    private int width;
+    private int height;
+    private boolean living = true;
 
     public Tank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
         super();
@@ -26,10 +28,52 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        switch (dir) {
+            case UP:
+                g.drawImage(ResourceMgr.tankUpImage, x, y, null);
+                width = ResourceMgr.tankUpImage.getWidth();
+                height = ResourceMgr.tankUpImage.getHeight();
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankDownImage, x, y, null);
+                width = ResourceMgr.tankDownImage.getWidth();
+                height = ResourceMgr.tankDownImage.getHeight();
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.tankLeftImage, x, y, null);
+                width = ResourceMgr.tankLeftImage.getWidth();
+                height = ResourceMgr.tankLeftImage.getHeight();
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankRightImage, x, y, null);
+                width = ResourceMgr.tankRightImage.getWidth();
+                height = ResourceMgr.tankRightImage.getHeight();
+                break;
+            case LEFT_UP:
+                g.drawImage(ResourceMgr.tankLeftUpImage, x, y, null);
+                width = ResourceMgr.tankLeftUpImage.getWidth();
+                height = ResourceMgr.tankLeftUpImage.getHeight();
+                break;
+            case RIGHT_UP:
+                g.drawImage(ResourceMgr.tankRightUpImage, x, y, null);
+                width = ResourceMgr.tankRightUpImage.getWidth();
+                height = ResourceMgr.tankRightUpImage.getHeight();
+                break;
+            case LEFT_DOWN:
+                g.drawImage(ResourceMgr.tankLeftDownImage, x, y, null);
+                width = ResourceMgr.tankLeftDownImage.getWidth();
+                height = ResourceMgr.tankLeftDownImage.getHeight();
+                break;
+            case RIGHT_DOWN:
+                g.drawImage(ResourceMgr.tankRightDownImage, x, y, null);
+                width = ResourceMgr.tankRightDownImage.getWidth();
+                height = ResourceMgr.tankRightDownImage.getHeight();
+                break;
+        }
+        move();
+    }
+
+    private void move() {
         if (!moving) {
             return;
         }
@@ -68,6 +112,8 @@ public class Tank {
     }
 
     public void fire() {
-        tf.getBulletList().add(new Bullet(this.x + WIDTH / 2 - Bullet.WIDTH / 2, this.y + HEIGHT / 2 - Bullet.HEIGHT / 2, this.dir));
+        if (DirEnum.RIGHT.equals(dir) || DirEnum.UP.equals(dir) || DirEnum.LEFT.equals(dir) || DirEnum.DOWN.equals(dir)) {
+            tf.getBulletList().add(new Bullet(this.x + width / 2, this.y + height / 2, this.dir));
+        }
     }
 }

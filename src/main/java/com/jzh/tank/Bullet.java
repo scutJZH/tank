@@ -6,13 +6,13 @@ import java.awt.*;
 
 @Data
 public class Bullet {
-    private static final int SPEED = 5;
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 20;
+    public static final int SPEED = 5;
+    private int width;
+    private int height;
     private int x;
     private int y;
     private DirEnum dir;
-    private boolean live = true;
+    private boolean living = true;
 
     public Bullet(int x, int y, DirEnum dir) {
         this.x = x;
@@ -21,10 +21,28 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        switch (dir) {
+            case UP:
+                width = ResourceMgr.bulletUpImage.getWidth();
+                height = ResourceMgr.bulletUpImage.getHeight();
+                g.drawImage(ResourceMgr.bulletUpImage, x - width / 2, y - height / 2, null);
+                break;
+            case DOWN:
+                width = ResourceMgr.bulletDownImage.getWidth();
+                height = ResourceMgr.bulletDownImage.getHeight();
+                g.drawImage(ResourceMgr.bulletDownImage, x - width / 2, y - height / 2, null);
+                break;
+            case LEFT:
+                width = ResourceMgr.bulletLeftImage.getWidth();
+                height = ResourceMgr.bulletLeftImage.getHeight();
+                g.drawImage(ResourceMgr.bulletLeftImage, x - width / 2, y - height / 2, null);
+                break;
+            case RIGHT:
+                width = ResourceMgr.bulletRightImage.getWidth();
+                height = ResourceMgr.bulletRightImage.getHeight();
+                g.drawImage(ResourceMgr.bulletRightImage, x - width / 2, y - height / 2, null);
+                break;
+        }
         move();
     }
 
@@ -62,7 +80,7 @@ public class Bullet {
                 break;
         }
         if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT) {
-            live = false;
+            living = false;
         }
     }
 }

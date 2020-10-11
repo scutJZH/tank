@@ -13,6 +13,7 @@ public class TankFrame extends Frame {
 
     private Tank myTank = new Tank(200, 200, DirEnum.RIGHT, this);
     private List<Bullet> bulletList = new ArrayList<>();
+    private List<Tank> enemies = new ArrayList<>();
 
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
@@ -34,14 +35,30 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹数量：" + bulletList.size(), 100, 100);
+        g.drawString("敌人数量：" + enemies.size(), 100, 300);
+        g.setColor(c);
+
         myTank.paint(g);
+
         Iterator<Bullet> bulletIterator = bulletList.iterator();
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();
-            if (!bullet.isLive()) {
+            if (!bullet.isLiving()) {
                 bulletIterator.remove();
             }
             bullet.paint(g);
+        }
+
+        Iterator<Tank> tankIterator = enemies.iterator();
+        while (tankIterator.hasNext()) {
+            Tank enemy = tankIterator.next();
+            if (!enemy.isLiving()) {
+                tankIterator.remove();
+            }
+            enemy.paint(g);
         }
     }
 
@@ -144,4 +161,7 @@ public class TankFrame extends Frame {
         return this.bulletList;
     }
 
+    public List<Tank> getEnemies() {
+        return this.enemies;
+    }
 }
