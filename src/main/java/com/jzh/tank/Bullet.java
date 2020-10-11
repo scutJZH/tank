@@ -108,7 +108,7 @@ public class Bullet {
             default:
                 break;
         }
-        if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT) {
+        if (x < -width || x > TankFrame.GAME_WIDTH || y < -height || y > TankFrame.GAME_HEIGHT) {
             living = false;
         }
     }

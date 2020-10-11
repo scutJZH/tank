@@ -66,7 +66,7 @@ public class TankFrame extends Frame {
         for (Bullet bullet : bulletList) {
             for (Tank tank : enemies) {
                 if (bullet.strike(tank)) {
-                    explodes.add(new Explode(tank.getX(), tank.getY()));
+                    explodes.add(new Explode(tank.getX() + tank.getWidth() / 2, tank.getY() + tank.getHeight() / 2));
                 }
             }
         }

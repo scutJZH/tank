@@ -19,7 +19,7 @@ public class Tank {
     private DirEnum dir;
     private boolean moving = false;
     private TankFrame tf;
-    private static final int SPEED = 2;
+    private int SPEED = 2;
     private int width;
     private int height;
     private boolean living = true;
@@ -186,14 +186,15 @@ public class Tank {
             default:
                 break;
         }
-        if (Group.ENEMY.equals(this.group)) {
-            if (Math.random() > 0.99) {
-                fire();
-            }
-            if (Math.random() > 0.95) {
-                randomDir();
-            }
+
+        if (Group.ENEMY.equals(this.group) && Math.random() > 0.95) {
+            randomDir();
         }
+
+        if (Group.ENEMY.equals(this.group) && Math.random() > 0.99) {
+            fire();
+        }
+        bounderCheck();
     }
 
     public void fire() {
@@ -207,6 +208,20 @@ public class Tank {
         }
     }
 
+    private void bounderCheck() {
+        if (x < 0) {
+            x = 0;
+        }
+        if (x > TankFrame.GAME_WIDTH - width) {
+            x = TankFrame.GAME_WIDTH - width;
+        }
+        if (y < height / 2) {
+            y = height / 2;
+        }
+        if (y > TankFrame.GAME_HEIGHT - height) {
+            y = TankFrame.GAME_HEIGHT - height;
+        }
+    }
 
     private void randomDir() {
         this.dir = DirEnum.values()[(int)(Math.random() * DirEnum.values().length)];

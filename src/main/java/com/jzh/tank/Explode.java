@@ -4,6 +4,7 @@ import lombok.Data;
 import sun.audio.AudioPlayer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,7 +30,8 @@ public class Explode {
             }
         }
         if (counter < ResourceMgr.explodeImages.size()) {
-            g.drawImage(ResourceMgr.explodeImages.get(counter++), x, y, null);
+            BufferedImage image = ResourceMgr.explodeImages.get(counter++);
+            g.drawImage(image, x - image.getWidth() / 2, y - image.getHeight() / 2, null);
         } else {
             living = false;
         }
