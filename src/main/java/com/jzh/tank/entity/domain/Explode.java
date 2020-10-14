@@ -1,5 +1,6 @@
-package com.jzh.tank;
+package com.jzh.tank.entity.domain;
 
+import com.jzh.tank.manage.ResourceMgr;
 import lombok.Data;
 import sun.audio.AudioPlayer;
 

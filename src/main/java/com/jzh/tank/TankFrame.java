@@ -1,5 +1,13 @@
 package com.jzh.tank;
 
+import com.jzh.tank.entity.domain.Bullet;
+import com.jzh.tank.entity.enumeration.DirEnum;
+import com.jzh.tank.entity.domain.Explode;
+import com.jzh.tank.entity.enumeration.*;
+import com.jzh.tank.factory.TankFactory;
+import com.jzh.tank.factory.Tank;
+import com.jzh.tank.factory.TankFactoryProducer;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,14 +18,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TankFrame extends Frame {
-
-    private Tank myTank = new Tank(200, 200, DirEnum.RIGHT, Group.SELF, this);
     private List<Bullet> bulletList = new ArrayList<>();
     private List<Tank> enemies = new ArrayList<>();
     private List<Explode> explodes = new ArrayList<>();
-
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
+    private TankFactory leaderTankFactory = TankFactoryProducer.getTankFactory(TankFactoryNameEnum.LEADER_TANK_FACTORY);
+    private Tank myTank = leaderTankFactory.createTank(200, 200, DirEnum.RIGHT, this);
 
     public TankFrame() {
         setVisible(true);

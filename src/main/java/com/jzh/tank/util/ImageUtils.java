@@ -1,9 +1,9 @@
-package com.jzh.tank;
+package com.jzh.tank.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ImageUtil {
+public class ImageUtils {
 
     public static BufferedImage rotateImage(BufferedImage image, int degree) {
         int width = image.getWidth();

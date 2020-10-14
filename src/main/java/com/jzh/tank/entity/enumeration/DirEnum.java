@@ -1,4 +1,4 @@
-package com.jzh.tank;
+package com.jzh.tank.entity.enumeration;
 
 public enum  DirEnum {
     LEFT,

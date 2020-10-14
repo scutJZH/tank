@@ -1,5 +1,9 @@
-package com.jzh.tank;
+package com.jzh.tank.entity.domain;
 
+import com.jzh.tank.entity.enumeration.DirEnum;
+import com.jzh.tank.factory.Tank;
+import com.jzh.tank.manage.ResourceMgr;
+import com.jzh.tank.TankFrame;
 import lombok.Data;
 
 import java.awt.*;

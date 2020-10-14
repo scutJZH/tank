@@ -1,4 +1,6 @@
-package com.jzh.tank;
+package com.jzh.tank.manage;
+
+import com.jzh.tank.util.ImageUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -35,8 +37,6 @@ public class ResourceMgr {
 
     static {
         try {
-
-
             tankUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
             tankLeftImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
             tankRightImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
@@ -47,18 +47,18 @@ public class ResourceMgr {
             tankRightUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankRU.gif"));
 
             myTankUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
-            myTankRightUpImage = ImageUtil.rotateImage(myTankUpImage, 45);
-            myTankRightImage = ImageUtil.rotateImage(myTankUpImage, 90);
-            myTankRightDownImage = ImageUtil.rotateImage(myTankUpImage, 135);
-            myTankDownImage = ImageUtil.rotateImage(myTankUpImage, 180);
-            myTankLeftDownImage = ImageUtil.rotateImage(myTankUpImage, 225);
-            myTankLeftUpImage = ImageUtil.rotateImage(myTankUpImage, 315);
-            myTankLeftImage = ImageUtil.rotateImage(myTankUpImage, 270);
+            myTankRightUpImage = ImageUtils.rotateImage(myTankUpImage, 45);
+            myTankRightImage = ImageUtils.rotateImage(myTankUpImage, 90);
+            myTankRightDownImage = ImageUtils.rotateImage(myTankUpImage, 135);
+            myTankDownImage = ImageUtils.rotateImage(myTankUpImage, 180);
+            myTankLeftDownImage = ImageUtils.rotateImage(myTankUpImage, 225);
+            myTankLeftUpImage = ImageUtils.rotateImage(myTankUpImage, 315);
+            myTankLeftImage = ImageUtils.rotateImage(myTankUpImage, 270);
 
             bulletUpImage = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.png"));
-            bulletLeftImage = ImageUtil.rotateImage(bulletUpImage, -90);
-            bulletRightImage = ImageUtil.rotateImage(bulletUpImage, 90);
-            bulletDownImage = ImageUtil.rotateImage(bulletUpImage, 180);
+            bulletLeftImage = ImageUtils.rotateImage(bulletUpImage, -90);
+            bulletRightImage = ImageUtils.rotateImage(bulletUpImage, 90);
+            bulletDownImage = ImageUtils.rotateImage(bulletUpImage, 180);
 
             explodeImages = new ArrayList<>();
             for (int i = 1; i <= 16; i++) {
