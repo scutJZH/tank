@@ -1,28 +1,14 @@
 package com.jzh.tank.entity.domain;
 
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.factory.Tank;
 import com.jzh.tank.manage.ResourceMgr;
-import com.jzh.tank.TankFrame;
-import lombok.Data;
 
 import java.awt.*;
 
-@Data
-public class Bullet {
-    public static final int SPEED = 5;
-    private int width;
-    private int height;
-    private int x;
-    private int y;
-    private DirEnum dir;
-    private boolean living = true;
-    Rectangle bulletRectangle = new Rectangle();
-    private Tank belongsTo;
+public class ImageBullet extends BaseBullet {
 
-    public Bullet(DirEnum dir, Tank belongsTo) {
-        this.dir = dir;
-        this.belongsTo = belongsTo;
+    public ImageBullet(DirEnum dir, BaseTank belongsTo) {
+        super(dir, belongsTo);
         switch (dir) {
             case UP:
                 width = ResourceMgr.bulletUpImage.getWidth();
@@ -52,9 +38,8 @@ public class Bullet {
         bulletRectangle.setBounds(this.x, this.y, this.width, this.height);
     }
 
+    @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
         switch (dir) {
             case UP:
                 width = ResourceMgr.bulletUpImage.getWidth();
@@ -77,40 +62,7 @@ public class Bullet {
                 g.drawImage(ResourceMgr.bulletRightImage, x, y, null);
                 break;
         }
-        g.setColor(c);
         move();
     }
 
-    private void move() {
-        switch (dir) {
-            case UP:
-                y -= SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
-            case LEFT:
-                x -= SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-        }
-        if (x < -width || x > TankFrame.GAME_WIDTH || y < -height || y > TankFrame.GAME_HEIGHT) {
-            living = false;
-        }
-        bulletRectangle.setBounds(this.x, this.y, this.width, this.height);
-    }
-
-    public boolean strike(Tank tank) {
-        if (belongsTo.equals(tank)) {
-            return false;
-        }
-        if (bulletRectangle.intersects(tank.getTankRectangle())) {
-            tank.setLiving(false);
-            this.living = false;
-            return true;
-        }
-        return false;
-    }
 }

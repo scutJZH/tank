@@ -2,7 +2,6 @@ package com.jzh.tank.entity.domain;
 
 import com.jzh.tank.TankFrame;
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.factory.Tank;
 import com.jzh.tank.manage.ResourceMgr;
 import sun.audio.AudioPlayer;
 
@@ -11,8 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class EnemyTank extends Tank {
-    public EnemyTank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
+public class ImageEnemyBaseTank extends BaseTank {
+    public ImageEnemyBaseTank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
         super(x, y, dir, tf);
         this.moving = true;
     }
@@ -46,7 +45,7 @@ public class EnemyTank extends Tank {
 
     @Override
     public void fire() {
-        tf.getBulletList().add(new Bullet(this.dir, this));
+        tf.getBulletList().add(tf.getTankFactory().createBullet(this.dir, this));
         try {
             AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_fire.wav")));
         } catch (FileNotFoundException e) {

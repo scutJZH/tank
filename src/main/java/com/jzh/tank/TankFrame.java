@@ -1,12 +1,8 @@
 package com.jzh.tank;
 
-import com.jzh.tank.entity.domain.Bullet;
+import com.jzh.tank.entity.domain.*;
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.entity.domain.Explode;
-import com.jzh.tank.entity.enumeration.*;
 import com.jzh.tank.factory.TankFactory;
-import com.jzh.tank.factory.Tank;
-import com.jzh.tank.factory.TankFactoryProducer;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -18,15 +14,16 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    private List<Bullet> bulletList = new ArrayList<>();
-    private List<Tank> enemies = new ArrayList<>();
-    private List<Explode> explodes = new ArrayList<>();
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
-    private TankFactory leaderTankFactory = TankFactoryProducer.getTankFactory(TankFactoryNameEnum.LEADER_TANK_FACTORY);
-    private Tank myTank = leaderTankFactory.createTank(200, 200, DirEnum.RIGHT, this);
 
-    public TankFrame() {
+    private List<BaseBullet> bulletList;
+    private List<BaseTank> enemies;
+    private List<BaseExplode> explodes;
+    private TankFactory tankFactory;
+    private BaseTank myTank;
+
+    public TankFrame(TankFactory tankFactory) {
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -37,8 +34,12 @@ public class TankFrame extends Frame {
                 System.exit(0);
             }
         });
-
         addKeyListener(new MyKeyListener());
+        this.bulletList = new ArrayList<>();
+        this.enemies = new ArrayList<>();
+        this.explodes  = new ArrayList<>();
+        this.tankFactory = tankFactory;
+        this.myTank = tankFactory.createLeaderTank(200, 200, DirEnum.RIGHT, this);
     }
 
     @Override
@@ -50,9 +51,9 @@ public class TankFrame extends Frame {
         g.setColor(c);
         myTank.paint(g);
 
-        Iterator<Bullet> bulletIterator = bulletList.iterator();
+        Iterator<BaseBullet> bulletIterator = bulletList.iterator();
         while (bulletIterator.hasNext()) {
-            Bullet bullet = bulletIterator.next();
+            BaseBullet bullet = bulletIterator.next();
             if (bullet.isLiving()) {
                 bullet.paint(g);
             } else {
@@ -60,9 +61,9 @@ public class TankFrame extends Frame {
             }
         }
 
-        Iterator<Tank> tankIterator = enemies.iterator();
+        Iterator<BaseTank> tankIterator = enemies.iterator();
         while (tankIterator.hasNext()) {
-            Tank enemy = tankIterator.next();
+            BaseTank enemy = tankIterator.next();
             if (enemy.isLiving()) {
                 enemy.paint(g);
             } else {
@@ -70,17 +71,17 @@ public class TankFrame extends Frame {
             }
         }
 
-        for (Bullet bullet : bulletList) {
-            for (Tank tank : enemies) {
+        for (BaseBullet bullet : bulletList) {
+            for (BaseTank tank : enemies) {
                 if (bullet.strike(tank)) {
-                    explodes.add(new Explode(tank.getX() + tank.getWidth() / 2, tank.getY() + tank.getHeight() / 2));
+                    explodes.add(tankFactory.createExplode(tank.getX() + tank.getWidth() / 2, tank.getY() + tank.getHeight() / 2));
                 }
             }
         }
 
-        Iterator<Explode> explodeIterator = explodes.listIterator();
+        Iterator<BaseExplode> explodeIterator = explodes.listIterator();
         while (explodeIterator.hasNext()) {
-            Explode explode = explodeIterator.next();
+            BaseExplode explode = explodeIterator.next();
             if (explode.isLiving()) {
                 explode.paint(g);
             } else {
@@ -177,11 +178,15 @@ public class TankFrame extends Frame {
         }
     }
 
-    public List<Bullet> getBulletList() {
+    public List<BaseBullet> getBulletList() {
         return this.bulletList;
     }
 
-    public List<Tank> getEnemies() {
+    public List<BaseTank> getEnemies() {
         return this.enemies;
+    }
+
+    public TankFactory getTankFactory() {
+        return tankFactory;
     }
 }

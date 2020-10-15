@@ -1,4 +1,4 @@
-package com.jzh.tank.factory;
+package com.jzh.tank.entity.domain;
 
 import com.jzh.tank.TankFrame;
 import com.jzh.tank.entity.enumeration.DirEnum;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.awt.*;
 
 @Data
-public abstract class Tank {
+public abstract class BaseTank {
     protected int x;
     protected int y;
     protected DirEnum dir;
@@ -25,7 +25,7 @@ public abstract class Tank {
 
     public abstract void move();
 
-    public Tank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
+    public BaseTank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
         super();
         this.x = x;
         this.y = y;
