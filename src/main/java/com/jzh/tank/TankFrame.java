@@ -9,21 +9,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class TankFrame extends Frame {
+    private Image offScreenImage = null;
+    private GameModel gameModel;
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    private List<BaseBullet> bulletList;
-    private List<BaseTank> enemies;
-    private List<BaseExplode> explodes;
-    private TankFactory tankFactory;
-    private BaseTank myTank;
-
-    public TankFrame(TankFactory tankFactory) {
+    public TankFrame(GameModel gameModel) {
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -35,63 +28,13 @@ public class TankFrame extends Frame {
             }
         });
         addKeyListener(new MyKeyListener());
-        this.bulletList = new ArrayList<>();
-        this.enemies = new ArrayList<>();
-        this.explodes  = new ArrayList<>();
-        this.tankFactory = tankFactory;
-        this.myTank = tankFactory.createLeaderTank(200, 200, DirEnum.RIGHT, this);
+        this.gameModel = gameModel;
     }
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹数量：" + bulletList.size(), 100, 100);
-        g.drawString("敌人数量：" + enemies.size(), 100, 300);
-        g.setColor(c);
-        myTank.paint(g);
-
-        Iterator<BaseBullet> bulletIterator = bulletList.iterator();
-        while (bulletIterator.hasNext()) {
-            BaseBullet bullet = bulletIterator.next();
-            if (bullet.isLiving()) {
-                bullet.paint(g);
-            } else {
-                bulletIterator.remove();
-            }
-        }
-
-        Iterator<BaseTank> tankIterator = enemies.iterator();
-        while (tankIterator.hasNext()) {
-            BaseTank enemy = tankIterator.next();
-            if (enemy.isLiving()) {
-                enemy.paint(g);
-            } else {
-                tankIterator.remove();
-            }
-        }
-
-        for (BaseBullet bullet : bulletList) {
-            for (BaseTank tank : enemies) {
-                if (bullet.strike(tank)) {
-                    explodes.add(tankFactory.createExplode(tank.getX() + tank.getWidth() / 2, tank.getY() + tank.getHeight() / 2));
-                }
-            }
-        }
-
-        Iterator<BaseExplode> explodeIterator = explodes.listIterator();
-        while (explodeIterator.hasNext()) {
-            BaseExplode explode = explodeIterator.next();
-            if (explode.isLiving()) {
-                explode.paint(g);
-            } else {
-                explodeIterator.remove();
-            }
-
-        }
+        gameModel.paint(g);
     }
-
-    Image offScreenImage = null;
 
     @Override
     public void update(Graphics g) {
@@ -131,7 +74,7 @@ public class TankFrame extends Frame {
                     bD = true;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    gameModel.getMyTank().fire();
                 default:
                     break;
             }
@@ -161,6 +104,7 @@ public class TankFrame extends Frame {
         }
 
         private void setTankDir() {
+            BaseTank myTank = gameModel.getMyTank();
             if (!(bL || bR || bU || bD)) {
                 myTank.setMoving(false);
                 return;
@@ -178,15 +122,7 @@ public class TankFrame extends Frame {
         }
     }
 
-    public List<BaseBullet> getBulletList() {
-        return this.bulletList;
-    }
-
-    public List<BaseTank> getEnemies() {
-        return this.enemies;
-    }
-
-    public TankFactory getTankFactory() {
-        return tankFactory;
+    public GameModel getGameModel() {
+        return gameModel;
     }
 }

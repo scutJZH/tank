@@ -1,14 +1,16 @@
 package com.jzh.tank.entity.domain;
 
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.manage.ResourceMgr;
+import com.jzh.tank.manager.ResourceMgr;
 
 import java.awt.*;
 
 public class ImageBullet extends BaseBullet {
 
     public ImageBullet(DirEnum dir, BaseTank belongsTo) {
-        super(dir, belongsTo);
+        this.dir = dir;
+        this.belongsTo = belongsTo;
+        this.living = true;
         switch (dir) {
             case UP:
                 width = ResourceMgr.bulletUpImage.getWidth();
@@ -35,7 +37,7 @@ public class ImageBullet extends BaseBullet {
                 this.y = belongsTo.getY() + belongsTo.getHeight() / 2 - height / 2;
                 break;
         }
-        bulletRectangle.setBounds(this.x, this.y, this.width, this.height);
+        rectangle.setBounds(this.x, this.y, this.width, this.height);
     }
 
     @Override

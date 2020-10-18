@@ -1,28 +1,25 @@
 package com.jzh.tank.entity.domain;
 
-import com.jzh.tank.manage.ResourceMgr;
+import com.jzh.tank.manager.ResourceMgr;
 import sun.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class ImageExplode extends BaseExplode {
+    private int counter;
 
     public ImageExplode(int x, int y) {
-        super(x, y);
+        this.x = x;
+        this.y = y;
+        this.living = true;
+        this.counter = 0;
     }
 
     @Override
     public void paint(Graphics g) {
         if (counter == 0) {
-            try {
-                AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/explode.wav")));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            AudioPlayer.player.start(ImageExplode.class.getClassLoader().getResourceAsStream("audios/explode.wav"));
         }
         if (counter < ResourceMgr.explodeImages.size()) {
             BufferedImage image = ResourceMgr.explodeImages.get(counter++);

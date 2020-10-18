@@ -1,18 +1,27 @@
 package com.jzh.tank.entity.domain;
 
-import com.jzh.tank.TankFrame;
+import com.jzh.tank.GameModel;
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.manage.ResourceMgr;
+import com.jzh.tank.manager.ResourceMgr;
 import sun.audio.AudioPlayer;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
-public class ImageLeaderBaseTank extends BaseTank {
-    public ImageLeaderBaseTank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
-        super(x, y, dir, tf);
+public class ImageLeaderTank extends BaseTank {
+    private static int SPEED = 2;
+    protected Rectangle tankRectangle;
+    private GameModel gameModel;
+
+    public ImageLeaderTank(Integer x, Integer y, DirEnum dir, GameModel gameModel) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.living = true;
+        this.moving = false;
+        this.gameModel = gameModel;
+        this.tankRectangle = new Rectangle();
+        initTankBounds();
+        tankRectangle.setBounds(x, y, width, height);
     }
 
     @Override
@@ -44,12 +53,8 @@ public class ImageLeaderBaseTank extends BaseTank {
 
     @Override
     public void fire() {
-        tf.getBulletList().add(tf.getTankFactory().createBullet(this.dir, this));
-        try {
-            AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_fire.wav")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        AudioPlayer.player.start(ImageLeaderTank.class.getClassLoader().getResourceAsStream("audios/tank_fire.wav"));
+        gameModel.addElement(gameModel.getFactory().createBullet(this.dir, this));
     }
 
     @Override
@@ -80,11 +85,7 @@ public class ImageLeaderBaseTank extends BaseTank {
             return;
         }
         // 发出声音
-        try {
-            AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_move.wav")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        AudioPlayer.player.start(ImageLeaderTank.class.getClassLoader().getResourceAsStream("audios/tank_move.wav"));
 
         switch (dir) {
             case UP:

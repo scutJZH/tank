@@ -1,7 +1,6 @@
 package com.jzh.tank.entity.domain;
 
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.manage.ResourceMgr;
 
 import java.awt.*;
 
@@ -10,7 +9,9 @@ public class RectBullet extends BaseBullet {
     public static final int HEIGHT = 10;
 
     public RectBullet(DirEnum dir, BaseTank belongsTo) {
-        super(dir, belongsTo);
+        this.dir = dir;
+        this.belongsTo = belongsTo;
+        this.living = true;
         this.width = WIDTH;
         this.height = HEIGHT;
         switch (dir) {
@@ -31,7 +32,7 @@ public class RectBullet extends BaseBullet {
                 this.y = belongsTo.getY() + belongsTo.getHeight() / 2 - height / 2;
                 break;
         }
-        bulletRectangle.setBounds(this.x, this.y, width, height);
+        rectangle.setBounds(this.x, this.y, width, height);
     }
 
     @Override

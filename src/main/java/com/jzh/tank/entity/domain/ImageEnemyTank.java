@@ -1,18 +1,25 @@
 package com.jzh.tank.entity.domain;
 
-import com.jzh.tank.TankFrame;
+import com.jzh.tank.GameModel;
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.manage.ResourceMgr;
+import com.jzh.tank.manager.ResourceMgr;
 import sun.audio.AudioPlayer;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
-public class ImageEnemyBaseTank extends BaseTank {
-    public ImageEnemyBaseTank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
-        super(x, y, dir, tf);
+public class ImageEnemyTank extends BaseTank {
+    private GameModel gameModel;
+    private static int SPEED = 2;
+
+    public ImageEnemyTank(Integer x, Integer y, DirEnum dir, GameModel gameModel) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.gameModel = gameModel;
+        this.living = true;
+        this.moving = false;
+        initTankBounds();
+        this.rectangle.setBounds(x, y, width, height);
         this.moving = true;
     }
 
@@ -45,12 +52,8 @@ public class ImageEnemyBaseTank extends BaseTank {
 
     @Override
     public void fire() {
-        tf.getBulletList().add(tf.getTankFactory().createBullet(this.dir, this));
-        try {
-            AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_fire.wav")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        gameModel.addElement(gameModel.getFactory().createBullet(this.dir, this));
+        AudioPlayer.player.start(ImageEnemyTank.class.getClassLoader().getResourceAsStream("audios/tank_fire.wav"));
     }
 
     @Override
@@ -81,11 +84,7 @@ public class ImageEnemyBaseTank extends BaseTank {
             return;
         }
         // 发出声音
-        try {
-            AudioPlayer.player.start(new FileInputStream(new File(this.getClass().getResource("/").getPath() + "/audios/tank_move.wav")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        AudioPlayer.player.start(ImageEnemyTank.class.getClassLoader().getResourceAsStream("audios/tank_move.wav"));
 
         switch (dir) {
             case UP:
@@ -111,6 +110,10 @@ public class ImageEnemyBaseTank extends BaseTank {
             fire();
         }
         bounderCheck();
-        tankRectangle.setBounds(x, y, width, height);
+        rectangle.setBounds(x, y, width, height);
+    }
+
+    private void randomDir() {
+        this.dir = DirEnum.values()[(int)(Math.random() * DirEnum.values().length)];
     }
 }

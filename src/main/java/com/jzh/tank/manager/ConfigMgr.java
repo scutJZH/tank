@@ -1,4 +1,4 @@
-package com.jzh.tank.manage;
+package com.jzh.tank.manager;
 
 import java.io.IOException;
 import java.util.Properties;

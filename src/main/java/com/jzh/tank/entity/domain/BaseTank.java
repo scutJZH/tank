@@ -4,36 +4,15 @@ import com.jzh.tank.TankFrame;
 import com.jzh.tank.entity.enumeration.DirEnum;
 import lombok.Data;
 
-import java.awt.*;
-
 @Data
-public abstract class BaseTank {
-    protected int x;
-    protected int y;
+public abstract class BaseTank extends GameObject {
     protected DirEnum dir;
-    protected boolean moving = false;
-    protected TankFrame tf;
-    protected int SPEED = 2;
-    protected int width;
-    protected int height;
-    protected boolean living = true;
-    protected Rectangle tankRectangle = new Rectangle();
-
-    public abstract void paint(Graphics g);
+    protected boolean living;
+    protected boolean moving;
 
     public abstract void fire();
 
     public abstract void move();
-
-    public BaseTank(Integer x, Integer y, DirEnum dir, TankFrame tf) {
-        super();
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.tf = tf;
-        initTankBounds();
-        tankRectangle.setBounds(x, y, width, height);
-    }
 
     protected abstract void initTankBounds();
 
@@ -52,8 +31,8 @@ public abstract class BaseTank {
         }
     }
 
-    protected void randomDir() {
-        this.dir = DirEnum.values()[(int)(Math.random() * DirEnum.values().length)];
+    public Boolean collide(BaseTank tank) {
+        return rectangle.intersects(tank.getRectangle());
     }
 
 }
