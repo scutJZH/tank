@@ -88,7 +88,7 @@ public class ImageLeaderTank extends BaseTank {
             return;
         }
         // 发出声音
-        AudioPlayer.player.start(ImageLeaderTank.class.getClassLoader().getResourceAsStream("audios/tank_move.wav"));
+//        AudioPlayer.player.start(ImageLeaderTank.class.getClassLoader().getResourceAsStream("audios/tank_move.wav"));
         preX = x;
         preY = y;
 

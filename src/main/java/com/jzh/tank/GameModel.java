@@ -24,6 +24,8 @@ public class GameModel {
         this.factory = factory;
         this.collider = ColliderChain.getInstance();
         addElement(new Wall(300, 300, 100, 50));
+        addElement(new Wall(300, 700, 100, 50));
+        addElement(new Wall(700, 500, 200, 500));
     }
 
     public void paint(Graphics g) {

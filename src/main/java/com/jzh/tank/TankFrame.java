@@ -16,6 +16,7 @@ public class TankFrame extends Frame {
     public static final int GAME_HEIGHT = 960;
 
     public TankFrame(GameModel gameModel) {
+        this.gameModel = gameModel;
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
@@ -27,7 +28,6 @@ public class TankFrame extends Frame {
             }
         });
         addKeyListener(new MyKeyListener());
-        this.gameModel = gameModel;
     }
 
     @Override

@@ -14,6 +14,7 @@ public class Main {
         GameModel gameModel = new GameModel(tankFactory);
         for(int i = 0; i < initEnemyNumber; i++) {
             gameModel.addElement(tankFactory.createEnemyTank(i * 80, 400, DirEnum.UP, gameModel));
+            gameModel.addElement(tankFactory.createEnemyTank(30, 60 * i, DirEnum.UP, gameModel));
         }
         TankFrame f = new TankFrame(gameModel);
 
