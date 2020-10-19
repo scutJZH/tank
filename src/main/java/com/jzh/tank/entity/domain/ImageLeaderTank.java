@@ -9,7 +9,6 @@ import java.awt.*;
 
 public class ImageLeaderTank extends BaseTank {
     private static int SPEED = 2;
-    protected Rectangle tankRectangle;
     private GameModel gameModel;
 
     public ImageLeaderTank(Integer x, Integer y, DirEnum dir, GameModel gameModel) {
@@ -19,9 +18,10 @@ public class ImageLeaderTank extends BaseTank {
         this.living = true;
         this.moving = false;
         this.gameModel = gameModel;
-        this.tankRectangle = new Rectangle();
         initTankBounds();
-        tankRectangle.setBounds(x, y, width, height);
+        rectangle.setBounds(x, y, width, height);
+        this.preX = x;
+        this.preY = y;
     }
 
     @Override
@@ -53,6 +53,9 @@ public class ImageLeaderTank extends BaseTank {
 
     @Override
     public void fire() {
+        if (!living) {
+            return;
+        }
         AudioPlayer.player.start(ImageLeaderTank.class.getClassLoader().getResourceAsStream("audios/tank_fire.wav"));
         gameModel.addElement(gameModel.getFactory().createBullet(this.dir, this));
     }
@@ -81,11 +84,13 @@ public class ImageLeaderTank extends BaseTank {
 
     @Override
     public void move() {
-        if (!moving) {
+        if (!living || !moving) {
             return;
         }
         // 发出声音
         AudioPlayer.player.start(ImageLeaderTank.class.getClassLoader().getResourceAsStream("audios/tank_move.wav"));
+        preX = x;
+        preY = y;
 
         switch (dir) {
             case UP:
@@ -105,6 +110,6 @@ public class ImageLeaderTank extends BaseTank {
         }
 
         bounderCheck();
-        tankRectangle.setBounds(x, y, width, height);
+        rectangle.setBounds(x, y, width, height);
     }
 }

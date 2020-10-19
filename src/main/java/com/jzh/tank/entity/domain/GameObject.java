@@ -10,7 +10,7 @@ public abstract class GameObject {
     protected int y;
     protected int width;
     protected int height;
-    protected boolean living;
+    protected Boolean living;
     protected Rectangle rectangle = new Rectangle();
 
     public abstract void paint(Graphics g);

@@ -12,7 +12,7 @@ public class TankBulletCollider implements Collider {
         if (o1 instanceof BaseBullet && o2 instanceof BaseTank) {
             BaseBullet bullet = (BaseBullet)o1;
             BaseTank tank = (BaseTank)o2;
-            if (bullet.collid(tank)) {
+            if (!bullet.getBelongsTo().equals(tank) && bullet.getRectangle().intersects(tank.getRectangle())) {
                 tank.setLiving(false);
                 bullet.setLiving(false);
                 gm.addElement(gm.getFactory().createExplode(tank.getX() + tank.getWidth() / 2, tank.getY() + tank.getHeight() / 2));

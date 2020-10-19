@@ -29,10 +29,7 @@ public abstract class BaseBullet extends GameObject {
         rectangle.setBounds(this.x, this.y, this.width, this.height);
     }
 
-    public boolean collid(BaseTank tank) {
-        if (belongsTo.equals(tank)) {
-            return false;
-        }
-        return rectangle.intersects(tank.getRectangle());
+    public BaseTank getBelongsTo() {
+        return belongsTo;
     }
 }

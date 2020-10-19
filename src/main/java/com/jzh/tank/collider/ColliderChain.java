@@ -18,6 +18,8 @@ public class ColliderChain implements Collider {
         colliderList = new LinkedList<>();
         colliderList.add(new TankBulletCollider());
         colliderList.add(new TankTankCollider());
+        colliderList.add(new TankWallCollider());
+        colliderList.add(new BulletWallCollider());
     }
 
     @Override

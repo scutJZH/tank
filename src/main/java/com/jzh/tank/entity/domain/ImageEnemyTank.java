@@ -21,6 +21,8 @@ public class ImageEnemyTank extends BaseTank {
         initTankBounds();
         this.rectangle.setBounds(x, y, width, height);
         this.moving = true;
+        this.preX = x;
+        this.preY = y;
     }
 
     @Override
@@ -52,6 +54,9 @@ public class ImageEnemyTank extends BaseTank {
 
     @Override
     public void fire() {
+        if (!living) {
+            return;
+        }
         gameModel.addElement(gameModel.getFactory().createBullet(this.dir, this));
         AudioPlayer.player.start(ImageEnemyTank.class.getClassLoader().getResourceAsStream("audios/tank_fire.wav"));
     }
@@ -80,11 +85,13 @@ public class ImageEnemyTank extends BaseTank {
 
     @Override
     public void move() {
-        if (!moving) {
+        if (!living || !moving) {
             return;
         }
         // 发出声音
         AudioPlayer.player.start(ImageEnemyTank.class.getClassLoader().getResourceAsStream("audios/tank_move.wav"));
+        preX = x;
+        preY = y;
 
         switch (dir) {
             case UP:

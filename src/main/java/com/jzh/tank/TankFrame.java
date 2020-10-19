@@ -2,7 +2,6 @@ package com.jzh.tank;
 
 import com.jzh.tank.entity.domain.*;
 import com.jzh.tank.entity.enumeration.DirEnum;
-import com.jzh.tank.factory.TankFactory;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -13,8 +12,8 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
     private Image offScreenImage = null;
     private GameModel gameModel;
-    public static final int GAME_WIDTH = 800;
-    public static final int GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 1200;
+    public static final int GAME_HEIGHT = 960;
 
     public TankFrame(GameModel gameModel) {
         setVisible(true);
@@ -105,6 +104,10 @@ public class TankFrame extends Frame {
 
         private void setTankDir() {
             BaseTank myTank = gameModel.getMyTank();
+            if (!myTank.getLiving()) {
+                return;
+            }
+
             if (!(bL || bR || bU || bD)) {
                 myTank.setMoving(false);
                 return;

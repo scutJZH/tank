@@ -7,8 +7,9 @@ import lombok.Data;
 @Data
 public abstract class BaseTank extends GameObject {
     protected DirEnum dir;
-    protected boolean living;
-    protected boolean moving;
+    protected Boolean moving;
+    protected int preX;
+    protected int preY;
 
     public abstract void fire();
 
@@ -31,8 +32,8 @@ public abstract class BaseTank extends GameObject {
         }
     }
 
-    public Boolean collide(BaseTank tank) {
-        return rectangle.intersects(tank.getRectangle());
+    public void backToPreStep() {
+        this.x = preX;
+        this.y = preY;
     }
-
 }
